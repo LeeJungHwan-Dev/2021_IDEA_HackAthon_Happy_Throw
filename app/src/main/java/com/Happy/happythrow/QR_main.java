@@ -19,6 +19,11 @@ import com.google.zxing.integration.android.IntentResult;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.DataOutputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
 
 public class QR_main extends AppCompatActivity {
 
@@ -193,6 +198,21 @@ public class QR_main extends AppCompatActivity {
         }
         else {
             super.onActivityResult(requestCode, resultCode, data);
+        }
+    }
+
+    public void savefile(String filename,String date){
+
+        try {
+            FileOutputStream fo = openFileOutput(filename,MODE_PRIVATE);
+            DataOutputStream dos = new DataOutputStream(fo);
+            dos.write(date.getBytes());
+            dos.flush();
+            dos.close();
+        } catch (FileNotFoundException e) {
+
+        } catch (IOException e) {
+
         }
     }
 }

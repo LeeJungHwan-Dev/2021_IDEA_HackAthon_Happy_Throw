@@ -65,6 +65,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:singleLine="true"
                     android:fontFamily="@font/font"
                     android:gravity="center"
                     android:hint="이름을 입력해주세요." />
@@ -94,6 +95,7 @@
                     android:layout_marginBottom="5dp"
                     android:layout_weight="1"
                     android:ems="11"
+                    android:singleLine="true"
                     android:fontFamily="@font/font"
                     android:gravity="center"
                     android:hint="번호를 입력해주세요."
@@ -120,6 +122,8 @@
                 <Spinner
                     android:id="@+id/phone_spinner"
                     android:layout_width="150dp"
+                    android:gravity="center"
+                    android:layout_gravity="center"
                     android:layout_height="wrap_content" />
             </LinearLayout>
 
@@ -163,9 +167,9 @@
 
                 <Spinner
                     android:id="@+id/bankBrandspinner2"
-                    android:layout_width="match_parent"
+                    android:layout_width="150dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="2" />
+                    />
 
                 <EditText
                     android:id="@+id/banknumber"
@@ -175,7 +179,7 @@
                     android:ems="30"
                     android:fontFamily="@font/font"
                     android:gravity="center"
-                    android:hint="계좌번호를 입력해주세요."
+                    android:hint="계좌번호 입력"
                     android:inputType="number" />
             </LinearLayout>
 
@@ -191,7 +195,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="5dp"
-                    android:layout_marginRight="85dp"
+                    android:layout_marginRight="155dp"
                     android:gravity="center"
                     android:text="인증번호"
                     android:textSize="20sp" />
@@ -201,7 +205,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:hint="인증번호를 입력해주세요." />
+                    android:inputType="number"
+                    android:hint="인증번호" />
             </LinearLayout>
 
             <Button

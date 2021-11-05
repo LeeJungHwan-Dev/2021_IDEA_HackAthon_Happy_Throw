@@ -23,11 +23,11 @@ public class MainActivity extends AppCompatActivity {
         getWindow().setAttributes(lp);
 
 
-        File file = new File(getFilesDir(),"first.txt");
+        File file = new File(getFilesDir(),"id.txt");
 
 
         if(file.exists()) {
-            Intent intent = new Intent(MainActivity.this, QR_main.class);
+            Intent intent = new Intent(MainActivity.this, adduser.class);
             startActivity(intent);
             overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
             finish();
