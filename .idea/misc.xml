@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/after/AndroidStudioProjects/Happytodo_kr/app/src/main/res/drawable-v24/button_line.xml" value="0.1953125" />
+        <entry key="..\:/Users/after/AndroidStudioProjects/Happytodo_kr/app/src/main/res/drawable-v24/ic_baseline_auto_delete_24.xml" value="0.1953125" />
+        <entry key="..\:/Users/after/AndroidStudioProjects/Happytodo_kr/app/src/main/res/drawable-v24/ic_baseline_bar_chart_24.xml" value="0.1953125" />
+        <entry key="..\:/Users/after/AndroidStudioProjects/Happytodo_kr/app/src/main/res/drawable-v24/ic_baseline_qr_code_scanner_24.xml" value="0.1953125" />
+        <entry key="..\:/Users/after/AndroidStudioProjects/Happytodo_kr/app/src/main/res/drawable-v24/ic_baseline_settings_24.xml" value="0.1953125" />
+        <entry key="..\:/Users/after/AndroidStudioProjects/Happytodo_kr/app/src/main/res/drawable-v24/ic_baseline_supervised_user_circle_24.xml" value="0.1953125" />
+        <entry key="..\:/Users/after/AndroidStudioProjects/Happytodo_kr/app/src/main/res/drawable-v24/ic_baseline_wifi_protected_setup_24.xml" value="0.1953125" />
+        <entry key="..\:/Users/after/AndroidStudioProjects/Happytodo_kr/app/src/main/res/drawable-v24/ic_launcher_background.xml" value="0.1953125" />
+        <entry key="..\:/Users/after/AndroidStudioProjects/Happytodo_kr/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1953125" />
+        <entry key="..\:/Users/after/AndroidStudioProjects/Happytodo_kr/app/src/main/res/drawable-v24/line_top_bottom.xml" value="0.1953125" />
+        <entry key="..\:/Users/after/AndroidStudioProjects/Happytodo_kr/app/src/main/res/layout/activity_adduser.xml" value="0.17916666666666667" />
+        <entry key="..\:/Users/after/AndroidStudioProjects/Happytodo_kr/app/src/main/res/layout/activity_edit.xml" value="0.17916666666666667" />
+        <entry key="..\:/Users/after/AndroidStudioProjects/Happytodo_kr/app/src/main/res/layout/activity_main.xml" value="0.17916666666666667" />
+        <entry key="..\:/Users/after/AndroidStudioProjects/Happytodo_kr/app/src/main/res/layout/activity_my_trash.xml" value="0.17916666666666667" />
+        <entry key="..\:/Users/after/AndroidStudioProjects/Happytodo_kr/app/src/main/res/layout/activity_qr_main.xml" value="0.17916666666666667" />
+        <entry key="..\:/Users/after/AndroidStudioProjects/Happytodo_kr/app/src/main/res/layout/activity_setting.xml" value="0.17916666666666667" />
+        <entry key="..\:/Users/after/AndroidStudioProjects/Happytodo_kr/app/src/main/res/layout/activity_trash_chart.xml" value="0.17916666666666667" />
+        <entry key="..\:/Users/after/AndroidStudioProjects/Happytodolayup/app/src/main/res/drawable-v24/boxline4under.xml" value="0.14814814814814814" />
+        <entry key="..\:/Users/after/AndroidStudioProjects/Happytodolayup/app/src/main/res/drawable/boxcircle.xml" value="0.17037037037037037" />
+        <entry key="..\:/Users/after/AndroidStudioProjects/Happytodolayup/app/src/main/res/drawable/boxline.xml" value="0.17037037037037037" />
+        <entry key="..\:/Users/after/AndroidStudioProjects/Happytodolayup/app/src/main/res/drawable/boxline3top.xml" value="0.17037037037037037" />
+        <entry key="..\:/Users/after/AndroidStudioProjects/Happytodolayup/app/src/main/res/drawable/boxnoline.xml" value="0.17037037037037037" />
+        <entry key="..\:/Users/after/AndroidStudioProjects/Happytodolayup/app/src/main/res/font-v26/font.xml" value="0.14814814814814814" />
+        <entry key="..\:/Users/after/AndroidStudioProjects/Happytodolayup/app/src/main/res/layout/activity_edit.xml" value="0.16666666666666666" />
+        <entry key="..\:/Users/after/AndroidStudioProjects/Happytodolayup/app/src/main/res/layout/activity_main.xml" value="0.10740740740740741" />
+        <entry key="..\:/Users/after/AndroidStudioProjects/Happytodolayup/app/src/main/res/layout/activity_setting.xml" value="0.10740740740740741" />
+        <entry key="..\:/Users/after/AndroidStudioProjects/Happytodolayup/app/src/main/res/layout/license.xml" value="0.10740740740740741" />
+        <entry key="..\:/Users/after/AndroidStudioProjects/Happytodolayup/app/src/main/res/layout/listview.xml" value="0.10740740740740741" />
+        <entry key="..\:/Users/after/AndroidStudioProjects/hatda/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1" />
+        <entry key="..\:/Users/after/AndroidStudioProjects/hatda/app/src/main/res/drawable/button_line.xml" value="0.17222222222222222" />
+        <entry key="..\:/Users/after/AndroidStudioProjects/hatda/app/src/main/res/drawable/ic_main_background.xml" value="0.1953125" />
+        <entry key="..\:/Users/after/AndroidStudioProjects/hatda/app/src/main/res/drawable/icon1_main_background.xml" value="0.1953125" />
+        <entry key="..\:/Users/after/AndroidStudioProjects/hatda/app/src/main/res/drawable/icon_main_background.xml" value="0.1953125" />
+        <entry key="..\:/Users/after/AndroidStudioProjects/hatda/app/src/main/res/drawable/line.xml" value="0.17222222222222222" />
+        <entry key="..\:/Users/after/AndroidStudioProjects/hatda/app/src/main/res/drawable/topline.xml" value="0.16296296296296298" />
+        <entry key="..\:/Users/after/AndroidStudioProjects/hatda/app/src/main/res/layout/a123.xml" value="0.17916666666666667" />
+        <entry key="..\:/Users/after/AndroidStudioProjects/hatda/app/src/main/res/layout/activity_edit.xml" value="0.16666666666666666" />
+        <entry key="..\:/Users/after/AndroidStudioProjects/hatda/app/src/main/res/layout/activity_getsetpassword.xml" value="0.1" />
+        <entry key="..\:/Users/after/AndroidStudioProjects/hatda/app/src/main/res/layout/activity_main.xml" value="0.17916666666666667" />
+        <entry key="..\:/Users/after/AndroidStudioProjects/hatda/app/src/main/res/layout/activity_set_alarm.xml" value="0.17916666666666667" />
+        <entry key="..\:/Users/after/AndroidStudioProjects/hatda/app/src/main/res/layout/activity_setting.xml" value="0.17916666666666667" />
+        <entry key="..\:/Users/after/AndroidStudioProjects/hatda/app/src/main/res/layout/license.xml" value="0.2" />
+        <entry key="..\:/Users/after/AndroidStudioProjects/hatda/app/src/main/res/layout/listview.xml" value="0.17916666666666667" />
+        <entry key="..\:/Users/after/AndroidStudioProjects/hatda/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1" />
+        <entry key="..\:/Users/after/AndroidStudioProjects/hatda/app/src/main/res/mipmap-anydpi-v26/ic_main.xml" value="0.1953125" />
+        <entry key="..\:/Users/after/AndroidStudioProjects/hatda/app/src/main/res/mipmap-anydpi-v26/ic_main_round.xml" value="0.1" />
+        <entry key="..\:/Users/after/AndroidStudioProjects/hatda/app/src/main/res/mipmap-anydpi-v26/icon1_main.xml" value="0.1953125" />
+        <entry key="..\:/Users/after/AndroidStudioProjects/hatda/app/src/main/res/mipmap-anydpi-v26/icon1_main_round.xml" value="0.1" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK" />
+</project>
