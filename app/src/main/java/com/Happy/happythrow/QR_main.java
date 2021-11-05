@@ -9,6 +9,15 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Toast;
+
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 
 public class QR_main extends AppCompatActivity {
@@ -20,9 +29,11 @@ public class QR_main extends AppCompatActivity {
      * 형태로 지정한 다음 아래 참고.
      */
 
-    Button QR_Shot , open , close;
-    ImageButton GoMyBin , GoMyChart , GoSetting;
+    Button QR_Shot, open, close;
+    ImageButton GoMyBin, GoMyChart, GoSetting;
     ImageView trashbin;
+
+    private IntentIntegrator qrScan;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +51,8 @@ public class QR_main extends AppCompatActivity {
         GoMyBin = findViewById(R.id.Go_MyTrash_button);
         GoMyChart = findViewById(R.id.Go_chart_button);
         GoSetting = findViewById(R.id.Go_setting_button);
+
+        qrScan = new IntentIntegrator(this);
 
         /**
          * 아래 코드는 건들지 마시오.
@@ -62,9 +75,8 @@ public class QR_main extends AppCompatActivity {
                 /**
                  * 이곳에 QR코드 촬영 버튼을 누르면 작동할 내용 작성.
                  */
-
-
-
+                qrScan.setPrompt("Scanning.... ");
+                qrScan.initiateScan();
 
 
                 /**
@@ -110,9 +122,9 @@ public class QR_main extends AppCompatActivity {
                  *  으로 페이드인 , 페이드 아웃 효과를 줌
                  *  finish()로 액티비티 종료(해당창 종료)
                  * */
-                Intent intent = new Intent(QR_main.this,trash_chart.class);
+                Intent intent = new Intent(QR_main.this, trash_chart.class);
                 startActivity(intent);
-                overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                 finish();
             }
         });
@@ -127,9 +139,9 @@ public class QR_main extends AppCompatActivity {
                  *  으로 페이드인 , 페이드 아웃 효과를 줌
                  *  finish()로 액티비티 종료(해당창 종료)
                  * */
-                Intent intent = new Intent(QR_main.this,my_trash.class);
+                Intent intent = new Intent(QR_main.this, my_trash.class);
                 startActivity(intent);
-                overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                 finish();
             }
         });
@@ -145,12 +157,42 @@ public class QR_main extends AppCompatActivity {
                  *  으로 페이드인 , 페이드 아웃 효과를 줌
                  *  finish()로 액티비티 종료(해당창 종료)
                  * */
-                Intent intent = new Intent(QR_main.this,setting.class);
+                Intent intent = new Intent(QR_main.this, setting.class);
                 startActivity(intent);
-                overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                 finish();
             }
         });
+    }
+    private static FirebaseFirestore db = FirebaseFirestore.getInstance();
+    CollectionReference productRef = db.collection("컬렉션이름");
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
 
+        if (result != null) {
+            //qrcode 가 없으면
+            if (result.getContents() == null) {
+                Toast.makeText(QR_main.this, "취소!", Toast.LENGTH_SHORT).show();
+            } else {
+                //qrcode 결과가 있으면
+                Toast.makeText(QR_main.this, "스캔완료!", Toast.LENGTH_SHORT).show();
+                try {
+                    //data를 json으로 변환
+                    JSONObject obj = new JSONObject(result.getContents());
+                    if(obj.getBoolean("Open")==false)
+                    {
+                        obj.put("Open",true);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    //Toast.makeText(MainActivity.this, result.getContents(), Toast.LENGTH_LONG).show();
+                    System.out.println("잘못된 QR코드입니다 다시 찍어주세요!");
+                }
+            }
+        }
+        else {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
     }
 }
