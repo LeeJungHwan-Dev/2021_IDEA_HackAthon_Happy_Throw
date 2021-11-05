@@ -17,6 +17,41 @@ public class my_trash extends AppCompatActivity {
      */
 
     ImageButton Gotrash,Gochart,Gosetting;
+    public class trashitem {
+        String name;
+        String howfull;
+        int fullnum;
+
+        public trashitem(String name, String howfull, int fullnum) {
+            this.name = name;
+            this.howfull = howfull;
+            this.fullnum = fullnum;
+        }
+
+        public String getName(){
+            return name;
+        }
+
+        public String gethowfull(){
+            return howfull;
+        }
+
+        public int getfullnum(){
+            return fullnum;
+        }
+
+        public void setName(String name){
+            this.name = name;
+        }
+
+        public void sethowfull(String howfull){
+            this.howfull = howfull;
+        }
+
+        public void setfullnum(int fullnum){
+            this.fullnum = fullnum;
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
