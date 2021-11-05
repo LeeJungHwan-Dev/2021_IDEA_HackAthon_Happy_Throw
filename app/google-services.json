@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "180635404642",
+    "project_id": "happytrash-2688b",
+    "storage_bucket": "happytrash-2688b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:180635404642:android:68d8cfad88ca58a31fc43b",
+        "android_client_info": {
+          "package_name": "com.todo.happytodo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "180635404642-fma78r4aqfjjdpbv1b2rke9l3t96cccf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAEx7A0nbv5VWQvz5LI8X2Ycm35HGwe8PQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "180635404642-fma78r4aqfjjdpbv1b2rke9l3t96cccf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
