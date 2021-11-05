@@ -40,7 +40,7 @@
     <com.github.mikephil.charting.charts.BarChart
         android:id="@+id/bar_chart"
         android:layout_width="match_parent"
-        android:layout_height="520dp" />//
+        android:layout_height="520dp" />
 
     <LinearLayout
         android:id="@+id/Go"
