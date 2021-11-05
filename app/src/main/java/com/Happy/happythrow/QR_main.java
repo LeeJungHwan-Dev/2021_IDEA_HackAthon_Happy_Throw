@@ -11,6 +11,8 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.zxing.integration.android.IntentIntegrator;
@@ -39,6 +41,12 @@ public class QR_main extends AppCompatActivity {
     ImageView trashbin;
 
     private IntentIntegrator qrScan;
+
+    private DatabaseReference mDatabase;
+
+    View QR_Shot1;
+    View Open;
+    View Close;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,10 +88,10 @@ public class QR_main extends AppCompatActivity {
                 /**
                  * 이곳에 QR코드 촬영 버튼을 누르면 작동할 내용 작성.
                  */
-                qrScan.setPrompt("Scanning.... ");
-                qrScan.initiateScan();
+                qrScan.setPrompt("Scanning.... ");//QRcode scan 아래에 문구 띄우기
+                qrScan.initiateScan();//QR 코드 scan 실행
 
-
+                QR_Shot1=view;
                 /**
                  * QR 촬영이 성공하면 아래 오픈 , 닫기 버튼을 VISIBLE 처리 할 것.
                  * QR 촬영 버튼은 GONE 처리 할 것.
@@ -92,7 +100,6 @@ public class QR_main extends AppCompatActivity {
                  * QR_Shot.setVisibility(View.GONE);
                  * trashbin.setVisibility(View.VISIBLE);
                  */
-
             }
         });
 
@@ -103,6 +110,11 @@ public class QR_main extends AppCompatActivity {
                  * 이곳에 open 이벤트 작성 할 것.
                  * 서버에 값을 전송 또는 수정 등등
                  */
+                Open=view;
+
+
+
+                close.setVisibility(Close.VISIBLE);
             }
         });
 
@@ -113,6 +125,9 @@ public class QR_main extends AppCompatActivity {
                  * 이곳에 close 이벤트 작성 할 것.
                  * 서버에 값을 전송 또는 수정 등등
                  */
+                Close=view;
+
+                open.setVisibility(Open.VISIBLE);
             }
         });
 
@@ -169,37 +184,37 @@ public class QR_main extends AppCompatActivity {
             }
         });
     }
-    private static FirebaseFirestore db = FirebaseFirestore.getInstance();
-    CollectionReference productRef = db.collection("컬렉션이름");
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
 
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
         if (result != null) {
             //qrcode 가 없으면
             if (result.getContents() == null) {
                 Toast.makeText(QR_main.this, "취소!", Toast.LENGTH_SHORT).show();
-            } else {
+            }
+            else {
                 //qrcode 결과가 있으면
                 Toast.makeText(QR_main.this, "스캔완료!", Toast.LENGTH_SHORT).show();
+                QR_Shot.setVisibility(QR_Shot1.GONE);
+                trashbin.setVisibility(trashbin.VISIBLE);
+                open.setVisibility(Open.VISIBLE);
                 try {
                     //data를 json으로 변환
                     JSONObject obj = new JSONObject(result.getContents());
-                    if(obj.getBoolean("Open")==false)
-                    {
-                        obj.put("Open",true);
-                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                     //Toast.makeText(MainActivity.this, result.getContents(), Toast.LENGTH_LONG).show();
-                    System.out.println("잘못된 QR코드입니다 다시 찍어주세요!");
+                    System.out.println("잘못된 QR코드 입니다.다시 입력해주세요!");
                 }
             }
-        }
-        else {
+
+        } else {
             super.onActivityResult(requestCode, resultCode, data);
         }
     }
+
 
     public void savefile(String filename,String date){
 
