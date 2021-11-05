@@ -9,7 +9,7 @@ import android.view.WindowManager;
 import android.widget.ImageButton;
 
 public class trash_chart extends AppCompatActivity {
-//
+
     /**
      * 이곳에
      * (사용할 아이템) 변수 이름;

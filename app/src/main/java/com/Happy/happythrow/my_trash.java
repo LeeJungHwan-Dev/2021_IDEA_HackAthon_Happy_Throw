@@ -52,6 +52,7 @@ public class my_trash extends AppCompatActivity {
             this.fullnum = fullnum;
         }
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
