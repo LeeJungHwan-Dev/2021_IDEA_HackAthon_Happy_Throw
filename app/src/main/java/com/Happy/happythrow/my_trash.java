@@ -1,12 +1,16 @@
 package com.Happy.happythrow;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 public class my_trash extends AppCompatActivity {
 
@@ -52,7 +56,15 @@ public class my_trash extends AppCompatActivity {
             this.fullnum = fullnum;
         }
     }
+class ViewHolder extends RecyclerView.ViewHolder {
+    public TextView textView;
+    public ImageButton imageButton;
 
+    ViewHolder(Context context, View itemView){
+        super(itemView);
+    }
+
+}
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
