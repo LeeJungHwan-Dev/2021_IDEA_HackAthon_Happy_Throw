@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.WindowManager;
 
+import java.io.File;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -21,8 +23,20 @@ public class MainActivity extends AppCompatActivity {
         getWindow().setAttributes(lp);
 
 
-        Intent intent = new Intent(MainActivity.this,QR_main.class);
-        startActivity(intent);
+        File file = new File(getFilesDir(),"first.txt");
 
+
+        if(file.exists()) {
+            Intent intent = new Intent(MainActivity.this, QR_main.class);
+            startActivity(intent);
+            overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
+            finish();
+        }
+        else {
+            Intent intent = new Intent(MainActivity.this, adduser.class);
+            startActivity(intent);
+            overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
+            finish();
+        }
     }
 }

@@ -23,6 +23,7 @@
             android:exported="false" />
         <activity
             android:name="com.Happy.happythrow.adduser"
+            android:windowSoftInputMode="adjustResize"
             android:exported="false" />
         <activity android:name="com.Happy.happythrow.MainActivity">
             <intent-filter>
@@ -31,10 +32,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <meta-data
-            android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-9257002707604510~6656819486" />
     </application>
 
 </manifest>
