@@ -146,6 +146,5 @@ public class my_trash extends AppCompatActivity {
                 finish();
             }
         });
-
     }
 }
