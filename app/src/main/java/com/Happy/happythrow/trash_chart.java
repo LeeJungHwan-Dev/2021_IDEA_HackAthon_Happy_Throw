@@ -47,8 +47,10 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import java.util.Map;
@@ -102,10 +104,15 @@ public class trash_chart extends AppCompatActivity {
          */
 
         productRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            long now = System.currentTimeMillis();
+            Date mDate = new Date(now);
+            SimpleDateFormat simpleDate = new SimpleDateFormat("yyyy");
+            String getTime = simpleDate.format(mDate);
+
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 DocumentSnapshot document = task.getResult();
-                List<Long> value = (List<Long>) document.get("2021");
+                List<Long> value = (List<Long>) document.get(getTime);
                 for(int i=0; i<12; i++) {
                     valueArray[i] = value.get(i);
                 }
