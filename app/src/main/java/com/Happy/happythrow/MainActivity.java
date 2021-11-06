@@ -18,6 +18,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+        //가나다라
+
         WindowManager.LayoutParams lp = getWindow().getAttributes();
         lp.flags &= ~WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN;
         lp.width = WindowManager.LayoutParams.MATCH_PARENT;
