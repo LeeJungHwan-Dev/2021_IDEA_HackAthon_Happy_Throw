@@ -44,6 +44,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -61,14 +64,18 @@ public class trash_chart extends AppCompatActivity {
 
     ImageButton Gotrash,GoMyBin,Gosetting;
     BarChart barChart;
-    Integer [] valueArray = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+    Long [] valueArray = {0l, 0l, 0l, 0l, 0l, 0l, 0l, 0l, 0l, 0l, 0l, 0l};
     private static FirebaseFirestore db = FirebaseFirestore.getInstance();
-    DocumentReference productRef = db.collection("hwtrash").document("id");
+    DocumentReference productRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trash_chart);
+
+        String id = readmemo("id.txt");
+        Log.i("test", id);
+        productRef = db.collection("Userdata").document(id);
 
         /**
          * xml과 자바 코드를 연결 하는 작업니다.
@@ -98,9 +105,9 @@ public class trash_chart extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 DocumentSnapshot document = task.getResult();
-                List<String> value = (List<String>) document.get("2021");
+                List<Long> value = (List<Long>) document.get("2021");
                 for(int i=0; i<12; i++) {
-                    valueArray[i] = Integer.parseInt(value.get(i));
+                    valueArray[i] = value.get(i);
                 }
 
                 BarChartGraph();
@@ -168,7 +175,7 @@ public class trash_chart extends AppCompatActivity {
     private void BarChartGraph() {
         ArrayList<BarEntry> entries = new ArrayList<>();
         for (int i=0; i< 12; i++) {
-            entries.add(new BarEntry(i+1, (Integer) valueArray[i]));
+            entries.add(new BarEntry(i+1, valueArray[i]));
         }
 
         BarDataSet depenses = new BarDataSet(entries, "쓰레기 배출량 단위: kg");
@@ -195,5 +202,28 @@ public class trash_chart extends AppCompatActivity {
         barChart.setData(data);
         barChart.animateXY(120, 120);
         barChart.invalidate();
+    }
+
+    public String readmemo(String fileName) {
+
+        try {
+            // 파일에서 읽은 데이터를 저장하기 위해서 만든 변수
+            StringBuffer data = new StringBuffer();
+            FileInputStream fs = openFileInput(fileName);//파일명
+            BufferedReader buffer = new BufferedReader
+                    (new InputStreamReader(fs));
+            String str = buffer.readLine(); // 파일에서 한줄을 읽어옴
+            if (str != null) {
+                while (str != null) {
+                    data.append(str);
+                    str = buffer.readLine();
+                }
+                buffer.close();
+                return data.toString();
+            }
+        } catch (Exception e) {
+
+        }
+        return null;
     }
 }
