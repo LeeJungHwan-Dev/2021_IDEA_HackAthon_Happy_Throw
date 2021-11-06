@@ -73,7 +73,7 @@ public class my_trash extends AppCompatActivity {
         nameList.add("Trash");
         howfullList.add("Howfull");
         fullnumList.add("80");
-        Adapter adapter = new Adapter(nameList, howfullList, fullnumList);
+        //Adapter adapter = new Adapter(nameList, howfullList, fullnumList);
         recyclerView.setAdapter(adapter);
         // adapter.notifyDataSetChanged();
         db.collection("trash")

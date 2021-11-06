@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -66,11 +67,6 @@ public class setting extends AppCompatActivity {
 
         phone = readmemo("id.txt");
 
-        Map<String,Object>  user = new HashMap<>();
-        user.put("1","1234");
-
-        db.collection("hwtrash").document("01000000000").collection("2021").document("0").set(user);
-
         ref();
 
         String[] bankitem = {"국민은행", "기업은행", "농협은행", "하나은행", "신한은행", "SC제일은행", "씨티은행", "카카오뱅크", "K뱅크"};
@@ -123,6 +119,9 @@ public class setting extends AppCompatActivity {
                     reset.setVisibility(View.VISIBLE);
                     readdbank.setVisibility(View.GONE);
                     ref();
+
+                    InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(accnum.getWindowToken(), 0);
                 }
                 else{
                     Toast.makeText(setting.this,"내용을 입력해주세요",Toast.LENGTH_SHORT).show();
@@ -188,9 +187,11 @@ public class setting extends AppCompatActivity {
         rebank.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 reset.setVisibility(View.GONE);
                 rebank.setVisibility(v.GONE);
                 readdbank.setVisibility(View.VISIBLE);
+
             }
         });
 
@@ -247,9 +248,12 @@ public class setting extends AppCompatActivity {
                 userphone = documentSnapshot.get("전화번호").toString();
                 userbanknum = documentSnapshot.get("계좌번호").toString();
                 userbank = documentSnapshot.get("은행").toString();
-
+                StringBuffer sb = new StringBuffer();
+                sb.append(userphone);
+                sb.insert(3,"-");
+                sb.insert(8,"-");
                 infousername.setText("이름 : "+username);
-                infophonenum.setText("전화번호 : "+userphone);
+                infophonenum.setText("전화번호 : "+sb);
                 infobanknum.setText("계좌번호 : "+userbanknum);
                 infobankname.setText("은행 : "+userbank);
 

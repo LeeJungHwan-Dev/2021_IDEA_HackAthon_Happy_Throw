@@ -20,11 +20,6 @@ public class Adapter extends RecyclerView.Adapter<Adapter.Holder> {
 
 
 
-    public Adapter() {
-
-    }
-
-
     @Override
     public Holder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
@@ -44,7 +39,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.Holder> {
     @Override
     public int getItemCount() {
 
-        return date.size();
+        return 0;
     }
 
     class Holder extends RecyclerView.ViewHolder {
