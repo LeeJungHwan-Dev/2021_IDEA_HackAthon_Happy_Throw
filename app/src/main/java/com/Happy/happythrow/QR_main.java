@@ -44,7 +44,7 @@ public class QR_main extends AppCompatActivity {
 
     private IntentIntegrator qrScan;
 
-    private DatabaseReference mDatabase;
+    private static FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     View QR_Shot1;
     View Open;
@@ -202,15 +202,12 @@ public class QR_main extends AppCompatActivity {
                 QR_Shot.setVisibility(QR_Shot1.GONE);
                 trashbin.setVisibility(trashbin.VISIBLE);
                 open.setVisibility(Open.VISIBLE);
-                try {
-                    //data를 json으로 변환
+               try {
+                   db.collection("trash").document(result.getContents().toString()).update("열림체크","1");
 
-                    JSONObject obj = new JSONObject(result.getContents());
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    //Toast.makeText(MainActivity.this, result.getContents(), Toast.LENGTH_LONG).show();
-                    System.out.println("잘못된 QR코드 입니다.다시 입력해주세요!");
-                }
+               } catch (Exception e) {
+                   e.printStackTrace();
+               }
             }
 
         } else {
