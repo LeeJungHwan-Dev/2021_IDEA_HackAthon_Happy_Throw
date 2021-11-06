@@ -38,6 +38,7 @@ import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.List;
 
 public class my_trash extends AppCompatActivity {
 
@@ -46,14 +47,12 @@ public class my_trash extends AppCompatActivity {
      * (사용할 아이템) 변수 이름;
      * 형태로 지정한 다음 아래 참고.
      */
-    String str;
 
     ImageButton Gotrash,Gochart,Gosetting;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     ArrayList <String> nameList = new ArrayList<>();
-    ArrayList <String> howfullList = new ArrayList<>();
-    ArrayList <String> fullnumList = new ArrayList<>();
+
     RecyclerView recyclerView;
 
     @Override
@@ -99,11 +98,10 @@ public class my_trash extends AppCompatActivity {
                 }
             }
 
-        }
+        };
 
-        inputfull();
 
-        Adapter adapter = new Adapter(nameList, howfullList, fullnumList);
+        Adapter adapter = new Adapter(nameList);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
 
@@ -188,24 +186,5 @@ public class my_trash extends AppCompatActivity {
         }
         return null;
     }
-    public void inputfull(){
-        int sizenameList = nameList.size();
-        for(int j=0; j< sizenameList; j++) {
-        db.collection("trash").document(nameList.get(j))
-                .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
 
-                str =  String.valueOf(documentSnapshot.get("포화도"));
-                Log.i("str", str);
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-                public void onFailure(@NonNull Exception e) {
-                Log.i("Fail", "Fail!!!!!!!!!!");
-                }
-            });
-            fullnumList.add(str);
-        }
-    }
 }

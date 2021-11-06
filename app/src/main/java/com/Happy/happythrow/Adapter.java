@@ -11,18 +11,20 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 import java.util.ArrayList;
 
 
 public class Adapter extends RecyclerView.Adapter<Adapter.Holder> {
     ArrayList<String> nameList;
-    ArrayList<String> howfullList;
-    ArrayList<String> fullnumList;
 
-    public Adapter(ArrayList<String> name, ArrayList<String> howfull,ArrayList<String> fullnum ) {
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+    public Adapter(ArrayList<String> name ) {
         this.nameList = name;
-        //this.howfullList = howfull;
-        this.fullnumList = fullnum;
     }
 
     @NonNull
@@ -38,9 +40,17 @@ public class Adapter extends RecyclerView.Adapter<Adapter.Holder> {
     @Override
     public void onBindViewHolder(@NonNull Holder holder, int position) {
 
-        holder.name.setText(nameList.get(position));
-        //holder.howfull.setText(howfullList.get(position));
-        holder.fullnum.setText(fullnumList.get(position));
+            holder.name.setText(nameList.get(position));
+
+            db.collection("trash").document(nameList.get(position)).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                @Override
+                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                    holder.fullnum.setText("포화도 "+documentSnapshot.get("포화도").toString());
+                }
+            });
+
+
+
     }
 
     @Override
@@ -53,7 +63,6 @@ public class Adapter extends RecyclerView.Adapter<Adapter.Holder> {
     class Holder extends RecyclerView.ViewHolder {
 
         TextView name;
-        TextView howfull;
         TextView fullnum;
 
 
@@ -61,7 +70,6 @@ public class Adapter extends RecyclerView.Adapter<Adapter.Holder> {
             super(itemView);
 
             name = itemView.findViewById(R.id.name);
-            howfull = itemView.findViewById(R.id.howfull);
             fullnum = itemView.findViewById(R.id.fullnum);
         }
     }
