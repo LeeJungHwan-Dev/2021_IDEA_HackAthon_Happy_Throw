@@ -78,7 +78,6 @@ public class my_trash extends AppCompatActivity {
         Adapter adapter = new Adapter(this);
         todolist.setLayoutManager(new LinearLayoutManager(this));
         todolist.setAdapter(adapter);
-        // adapter.notifyDataSetChanged();
         db.collection("trash")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
