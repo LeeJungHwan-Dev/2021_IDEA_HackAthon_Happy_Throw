@@ -4,6 +4,7 @@ import static android.content.ContentValues.TAG;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
@@ -40,8 +41,9 @@ public class my_trash extends AppCompatActivity {
     ArrayList <String> howfullList = new ArrayList<>();
     ArrayList <String> fullnumList = new ArrayList<>();
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private RecyclerView recyclerView;
-    Adapter adapter;
+    ArrayList<String> todo = new ArrayList<String>();
+    ArrayList<String> completodo = new ArrayList<String>();
+    RecyclerView todolist;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +58,7 @@ public class my_trash extends AppCompatActivity {
         Gotrash = findViewById(R.id.Go_Trash_button);
         Gochart = findViewById(R.id.Go_chart_button);
         Gosetting = findViewById(R.id.Go_setting_button);
-        recyclerView = findViewById(R.id.itemList);
+        todolist = findViewById(R.id.itemList);
         /**
          * 아래 코드는 건들지 마시오.
          * 레이아웃을 다시 그려주는 코드 입니다.
@@ -73,8 +75,9 @@ public class my_trash extends AppCompatActivity {
         nameList.add("Trash");
         howfullList.add("Howfull");
         fullnumList.add("80");
-        //Adapter adapter = new Adapter(nameList, howfullList, fullnumList);
-        recyclerView.setAdapter(adapter);
+        Adapter adapter = new Adapter(this);
+        todolist.setLayoutManager(new LinearLayoutManager(this));
+        todolist.setAdapter(adapter);
         // adapter.notifyDataSetChanged();
         db.collection("trash")
                 .get()

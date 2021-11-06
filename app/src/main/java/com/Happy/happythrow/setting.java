@@ -241,24 +241,27 @@ public class setting extends AppCompatActivity {
     }
 
     public void ref(){
-        db.collection("Userdata").document(phone).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                username = documentSnapshot.get("이름").toString();
-                userphone = documentSnapshot.get("전화번호").toString();
-                userbanknum = documentSnapshot.get("계좌번호").toString();
-                userbank = documentSnapshot.get("은행").toString();
-                StringBuffer sb = new StringBuffer();
-                sb.append(userphone);
-                sb.insert(3,"-");
-                sb.insert(8,"-");
-                infousername.setText("이름 : "+username);
-                infophonenum.setText("전화번호 : "+sb);
-                infobanknum.setText("계좌번호 : "+userbanknum);
-                infobankname.setText("은행 : "+userbank);
+        try {
+            db.collection("Userdata").document(phone).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                @Override
+                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                    username = documentSnapshot.get("이름").toString();
+                    userphone = documentSnapshot.get("전화번호").toString();
+                    userbanknum = documentSnapshot.get("계좌번호").toString();
+                    userbank = documentSnapshot.get("은행").toString();
+                    StringBuffer sb = new StringBuffer();
+                    sb.append(userphone);
+                    sb.insert(3,"-");
+                    sb.insert(8,"-");
+                    infousername.setText("이름 : "+username);
+                    infophonenum.setText("전화번호 : "+sb);
+                    infobanknum.setText("계좌번호 : "+userbanknum);
+                    infobankname.setText("은행 : "+userbank);
 
-            }
-        });
-
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

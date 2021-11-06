@@ -116,7 +116,7 @@ public class adduser extends AppCompatActivity {
                                 if(numberinput.getText().length() > 11 ||numberinput.getText().length() < 11 ){
                                     Toast.makeText(adduser.this,"올바른 번호로 입력해주세요.",Toast.LENGTH_SHORT).show();
                                 }
-                                else if(numberinput.getText().length() == 11 && !(nameinput.getText().toString().equals("")) && !(chosecallBrand.equals(""))){
+                                else if(numberinput.getText().length() == 11 && !(nameinput.getText().toString().equals("")) && !(chosecallBrand.equals(""))&&!(nameinput.getText().toString().equals(""))){
                                     InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
                                     imm.hideSoftInputFromWindow(numberinput.getWindowToken(), 0);
                                     Toast.makeText(adduser.this,"실명인증 완료.",Toast.LENGTH_SHORT).show();
