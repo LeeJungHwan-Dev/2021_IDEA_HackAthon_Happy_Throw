@@ -102,27 +102,30 @@ public class trash_chart extends AppCompatActivity {
         /**--
          * 이 아래로 코드를 작성해주세요.
          */
+        try {
+            productRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                long now = System.currentTimeMillis();
+                Date mDate = new Date(now);
+                SimpleDateFormat simpleDate = new SimpleDateFormat("yyyy");
+                String getTime = simpleDate.format(mDate);
 
-        productRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            long now = System.currentTimeMillis();
-            Date mDate = new Date(now);
-            SimpleDateFormat simpleDate = new SimpleDateFormat("yyyy");
-            String getTime = simpleDate.format(mDate);
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    DocumentSnapshot document = task.getResult();
+                    List<Long> value = (List<Long>) document.get(getTime);
+                    for (int i = 0; i < 12; i++) {
+                        valueArray[i] = value.get(i);
+                    }
 
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                DocumentSnapshot document = task.getResult();
-                List<Long> value = (List<Long>) document.get(getTime);
-                for(int i=0; i<12; i++) {
-                    valueArray[i] = value.get(i);
+                    BarChartGraph();
+                    barChart.setTouchEnabled(false); // 확대불가
+                    barChart.getAxisRight().setAxisMaxValue(120);
+                    barChart.getAxisLeft().setAxisMaxValue(120);
                 }
+            });
+        } catch(Exception e) {
 
-                BarChartGraph();
-                barChart.setTouchEnabled(false); // 확대불가
-                barChart.getAxisRight().setAxisMaxValue(120);
-                barChart.getAxisLeft().setAxisMaxValue(120);
-            }
-        });
+        }
 
         GoMyBin.setOnClickListener(new View.OnClickListener() {
             @Override
