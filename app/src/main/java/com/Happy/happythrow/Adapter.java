@@ -11,16 +11,18 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 
 
 public class Adapter extends RecyclerView.Adapter<Adapter.Holder> {
+    ArrayList<String> nameList;
+    ArrayList<String> howfullList;
+    ArrayList<String> fullnumList;
 
-    Context mContext;
-
-
-
-    public Adapter(Context context) {
-       this.mContext = context;
+    public Adapter(ArrayList<String> name, ArrayList<String> howfull,ArrayList<String> fullnum ) {
+        this.nameList = name;
+        this.howfullList = howfull;
+        this.fullnumList = fullnum;
     }
 
     @NonNull
@@ -29,34 +31,38 @@ public class Adapter extends RecyclerView.Adapter<Adapter.Holder> {
 
         Context context = parent.getContext();
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
-        View view = inflater.inflate(R.layout.listview, parent, false);
+        View view = inflater.inflate(R.layout.my_trashitem, parent, false);
         return new Holder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull Holder holder, int position) {
 
-            holder.tv1.setText("asd123");
-
+        holder.name.setText(nameList.get(position));
+        holder.howfull.setText(howfullList.get(position));
+        holder.fullnum.setText(fullnumList.get(position));
     }
 
     @Override
     public int getItemCount() {
 
-        return 1;
+        return nameList.size();
+
     }
 
     class Holder extends RecyclerView.ViewHolder {
 
-        TextView tv1;
+        TextView name;
+        TextView howfull;
+        TextView fullnum;
 
 
         public Holder(@NonNull View itemView) {
             super(itemView);
 
-
-            tv1 = itemView.findViewById(R.id.tv1);
-
+            name = itemView.findViewById(R.id.name);
+            howfull = itemView.findViewById(R.id.howfull);
+            fullnum = itemView.findViewById(R.id.fullnum);
         }
     }
 }

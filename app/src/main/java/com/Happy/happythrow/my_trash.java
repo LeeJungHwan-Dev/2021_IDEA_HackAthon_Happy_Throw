@@ -4,6 +4,7 @@ import static android.content.ContentValues.TAG;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -41,9 +42,7 @@ public class my_trash extends AppCompatActivity {
     ArrayList <String> howfullList = new ArrayList<>();
     ArrayList <String> fullnumList = new ArrayList<>();
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    ArrayList<String> todo = new ArrayList<String>();
-    ArrayList<String> completodo = new ArrayList<String>();
-    RecyclerView todolist;
+    RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +57,7 @@ public class my_trash extends AppCompatActivity {
         Gotrash = findViewById(R.id.Go_Trash_button);
         Gochart = findViewById(R.id.Go_chart_button);
         Gosetting = findViewById(R.id.Go_setting_button);
-        todolist = findViewById(R.id.itemList);
+        recyclerView = findViewById(R.id.itemList);
         /**
          * 아래 코드는 건들지 마시오.
          * 레이아웃을 다시 그려주는 코드 입니다.
@@ -72,26 +71,18 @@ public class my_trash extends AppCompatActivity {
         /**
          * 이 아래로 코드를 작성해주세요.
          */
-        nameList.add("Trash");
-        howfullList.add("Howfull");
-        fullnumList.add("80");
-        Adapter adapter = new Adapter(this);
-        todolist.setLayoutManager(new LinearLayoutManager(this));
-        todolist.setAdapter(adapter);
-        db.collection("trash")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Log.d(TAG, document.getId() + " => " + document.getData());
-                            }
-                        } else {
-                            Log.w(TAG, "Error getting documents.", task.getException());
-                        }
-                    }
-                });
+
+        nameList.add("Kim"); nameList.add("jung");
+        howfullList.add("How full?"); howfullList.add("How full?");
+        fullnumList.add("80"); fullnumList.add("90");
+        Adapter adapter = new Adapter(nameList, howfullList, fullnumList);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(adapter);
+
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(), new LinearLayoutManager(this).getOrientation());
+        recyclerView.addItemDecoration(dividerItemDecoration);
+        DivideLine spaceDecoration = new DivideLine(20);
+        recyclerView.addItemDecoration(spaceDecoration);
 
         Gotrash.setOnClickListener(new View.OnClickListener() {
             @Override
