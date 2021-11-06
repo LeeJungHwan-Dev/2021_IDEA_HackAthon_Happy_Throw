@@ -1,17 +1,47 @@
 package com.Happy.happythrow;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
+import java.util.HashMap;
+import java.util.Map;
 
 public class setting extends AppCompatActivity {
 
     ImageButton gotrash,gochart,gomybin;
+    Button reset,rebank,add;
+    Spinner bank;
+    String bankname;
+    String phone,username,userphone,userbanknum,userbank;
+    EditText banknumber,accnum;
+    LinearLayout readdbank;
+    TextView infousername,infophonenum,infobanknum,infobankname;
 
+    private static FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,10 +49,35 @@ public class setting extends AppCompatActivity {
         setContentView(R.layout.activity_setting);
 
 
-
         gotrash = findViewById(R.id.Go_Trash_button);
         gochart = findViewById(R.id.Go_chart_button);
         gomybin = findViewById(R.id.Go_MyTrash_button);
+        reset = findViewById(R.id.Reset);
+        rebank = findViewById(R.id.ReEditbank);
+        bank = findViewById(R.id.bankBrandspinner2);
+        add = findViewById(R.id.adduserok);
+        banknumber = findViewById(R.id.banknumber);
+        accnum = findViewById(R.id.numbercheckinput);
+        readdbank = findViewById(R.id.readdbanks);
+        infousername = findViewById(R.id.infousername);
+        infophonenum = findViewById(R.id.infophonenum);
+        infobanknum = findViewById(R.id.infobanknum);
+        infobankname = findViewById(R.id.infobankname);
+
+        phone = readmemo("id.txt");
+
+        Map<String,Object>  user = new HashMap<>();
+        user.put("1","1234");
+
+        db.collection("hwtrash").document("01000000000").collection("2021").document("0").set(user);
+
+        ref();
+
+        String[] bankitem = {"국민은행", "기업은행", "농협은행", "하나은행", "신한은행", "SC제일은행", "씨티은행", "카카오뱅크", "K뱅크"};
+        ArrayAdapter<String> bankadapter = new ArrayAdapter<String>(
+                this, android.R.layout.simple_spinner_item, bankitem
+        );
+        bank.setAdapter(bankadapter);
 
         /**
          * 아래 코드는 건들지 마시오.
@@ -40,6 +95,41 @@ public class setting extends AppCompatActivity {
          * 이 아래로 코드를 작성해주세요.
          */
 
+        phone = readmemo("id.txt");
+
+        bank.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                bankname = (bankitem[position]);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                bankname = "";
+            }
+        });
+
+        add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!(banknumber.getText().toString().equals("")) && !(accnum.getText().toString().equals(""))) {
+
+                    db.collection("Userdata").document(phone).update("은행",bankname);
+                    db.collection("Userdata").document(phone).update("계좌번호",banknumber.getText().toString());
+
+                    Toast.makeText(setting.this,"변경 완료",Toast.LENGTH_SHORT).show();
+
+                    rebank.setVisibility(View.VISIBLE);
+                    reset.setVisibility(View.VISIBLE);
+                    readdbank.setVisibility(View.GONE);
+                    ref();
+                }
+                else{
+                    Toast.makeText(setting.this,"내용을 입력해주세요",Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
         gotrash.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -51,9 +141,9 @@ public class setting extends AppCompatActivity {
                  *  finish()로 액티비티 종료(해당창 종료)
                  * */
 
-                Intent intent = new Intent(setting.this,QR_main.class);
+                Intent intent = new Intent(setting.this, QR_main.class);
                 startActivity(intent);
-                overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                 finish();
             }
         });
@@ -69,9 +159,9 @@ public class setting extends AppCompatActivity {
                  *  finish()로 액티비티 종료(해당창 종료)
                  * */
 
-                Intent intent = new Intent(setting.this,QR_main.class);
+                Intent intent = new Intent(setting.this, QR_main.class);
                 startActivity(intent);
-                overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                 finish();
             }
         });
@@ -87,10 +177,82 @@ public class setting extends AppCompatActivity {
                  *  finish()로 액티비티 종료(해당창 종료)
                  * */
 
-                Intent intent = new Intent(setting.this,my_trash.class);
+                Intent intent = new Intent(setting.this, my_trash.class);
                 startActivity(intent);
-                overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                 finish();
+            }
+        });
+
+
+        rebank.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                reset.setVisibility(View.GONE);
+                rebank.setVisibility(v.GONE);
+                readdbank.setVisibility(View.VISIBLE);
+            }
+        });
+
+        reset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String path = getFilesDir().toString();
+                File file = new File(path);
+                File[] files = file.listFiles();
+                int a = files.length;
+                for (int i = 0; i < a; i++) {
+                    File file1 = new File(getFilesDir(), "trash" + i + ".txt");
+                    if (file1.exists()) {
+                        file1.delete();
+                    } else {
+
+                    }
+                }
+                Toast.makeText(setting.this,"초기화 완료",Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
+    public String readmemo(String fileName) {
+
+        try {
+            // 파일에서 읽은 데이터를 저장하기 위해서 만든 변수
+            StringBuffer data = new StringBuffer();
+            FileInputStream fs = openFileInput(fileName);//파일명
+            BufferedReader buffer = new BufferedReader
+                    (new InputStreamReader(fs));
+            String str = buffer.readLine(); // 파일에서 한줄을 읽어옴
+            if (str != null) {
+                while (str != null) {
+                    data.append(str);
+                    str = buffer.readLine();
+                }
+                buffer.close();
+                return data.toString();
+            }
+        } catch (Exception e) {
+
+        }
+        return null;
+    }
+
+    public void ref(){
+        db.collection("Userdata").document(phone).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                username = documentSnapshot.get("이름").toString();
+                userphone = documentSnapshot.get("전화번호").toString();
+                userbanknum = documentSnapshot.get("계좌번호").toString();
+                userbank = documentSnapshot.get("은행").toString();
+
+                infousername.setText("이름 : "+username);
+                infophonenum.setText("전화번호 : "+userphone);
+                infobanknum.setText("계좌번호 : "+userbanknum);
+                infobankname.setText("은행 : "+userbank);
+
             }
         });
 

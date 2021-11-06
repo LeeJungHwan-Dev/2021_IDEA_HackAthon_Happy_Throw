@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
@@ -18,7 +17,6 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -60,7 +58,7 @@ public class adduser extends AppCompatActivity {
         lp.height = WindowManager.LayoutParams.MATCH_PARENT;
 
         String[] callbranditem = {"KT","U+","SKT"};
-        String[] bankitem = {"국민은행","기업은행","하나은행","신한은행","SC제일은행","씨티은행","카카오뱅크","K뱅크"};
+        String[] bankitem = {"국민은행","기업은행","농협은행","하나은행","신한은행","SC제일은행","씨티은행","카카오뱅크","K뱅크"};
         ArrayAdapter<String> calladapter = new ArrayAdapter<String>(
                 this, android.R.layout.simple_spinner_item,callbranditem
         );
@@ -149,8 +147,6 @@ public class adduser extends AppCompatActivity {
                     banknum = banknumberinput.getText().toString();
                     InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(numberinput.getWindowToken(), 0);
-
-                    String userId = UUID.randomUUID().toString();
 
                     Map<String, Object> userdata = new HashMap<>();
                     userdata.put("이름",name);

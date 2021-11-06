@@ -29,13 +29,13 @@ public class MainActivity extends AppCompatActivity {
 
 
         if(file.exists()) {
-            Intent intent = new Intent(MainActivity.this, adduser.class);
+            Intent intent = new Intent(MainActivity.this, QR_main.class);
             startActivity(intent);
             overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
             finish();
         }
         else {
-            Intent intent = new Intent(MainActivity.this, QR_main.class);
+            Intent intent = new Intent(MainActivity.this, adduser.class);
             startActivity(intent);
             overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
             finish();

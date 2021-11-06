@@ -2,6 +2,7 @@ package com.Happy.happythrow;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -39,6 +40,7 @@ public class QR_main extends AppCompatActivity {
     Button QR_Shot, open, close;
     ImageButton GoMyBin, GoMyChart, GoSetting;
     ImageView trashbin;
+    View v;
 
     private IntentIntegrator qrScan;
 
@@ -80,7 +82,6 @@ public class QR_main extends AppCompatActivity {
         /**
          * 이 아래로 코드를 작성해주세요.
          */
-
 
         QR_Shot.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -167,6 +168,7 @@ public class QR_main extends AppCompatActivity {
         });
 
 
+
         GoSetting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -202,6 +204,7 @@ public class QR_main extends AppCompatActivity {
                 open.setVisibility(Open.VISIBLE);
                 try {
                     //data를 json으로 변환
+
                     JSONObject obj = new JSONObject(result.getContents());
                 } catch (JSONException e) {
                     e.printStackTrace();
