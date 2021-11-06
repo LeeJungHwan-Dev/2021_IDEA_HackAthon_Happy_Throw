@@ -104,7 +104,7 @@ public class adduser extends AppCompatActivity {
                         public void onSuccess(DocumentSnapshot documentSnapshot) {
 
 
-                            if (documentSnapshot.get("이름") != null) {
+                            if (documentSnapshot.get("이름") != null && !(nameinput.getText().toString().equals(""))) {
                                 Toast.makeText(adduser.this, "이미가입되어있습니다.", Toast.LENGTH_SHORT).show();
                                 savefile("id.txt",numberinput.getText().toString());
                                 Intent intent = new Intent(adduser.this,QR_main.class);
