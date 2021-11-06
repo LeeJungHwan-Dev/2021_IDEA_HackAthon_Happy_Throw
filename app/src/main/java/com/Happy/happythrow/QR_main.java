@@ -2,8 +2,6 @@ package com.Happy.happythrow;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -13,25 +11,22 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
+import java.io.BufferedReader;
 import java.io.DataOutputStream;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.UUID;
 
 
 public class QR_main extends AppCompatActivity {
-    String name;
+    String name;//It's Jinny
 
     /**
      * 이곳에
@@ -41,7 +36,7 @@ public class QR_main extends AppCompatActivity {
 
     Button QR_Shot, open, close;
     ImageButton GoMyBin, GoMyChart, GoSetting;
-    ImageView trashbin;
+    ImageView openedbin,closedbin;
     View v;
 
     private IntentIntegrator qrScan;
@@ -64,7 +59,8 @@ public class QR_main extends AppCompatActivity {
         QR_Shot = findViewById(R.id.QR_shot);
         open = findViewById(R.id.TrashOpen);
         close = findViewById(R.id.TrashClose);
-        trashbin = findViewById(R.id.trashbin);
+        openedbin=findViewById(R.id.openedbin);
+        closedbin=findViewById(R.id.closedbin);
         GoMyBin = findViewById(R.id.Go_MyTrash_button);
         GoMyChart = findViewById(R.id.Go_chart_button);
         GoSetting = findViewById(R.id.Go_setting_button);
@@ -196,17 +192,24 @@ public class QR_main extends AppCompatActivity {
                 //qrcode 결과가 있으면
                 Toast.makeText(QR_main.this, "스캔완료!", Toast.LENGTH_SHORT).show();
                 QR_Shot.setVisibility(QR_Shot1.GONE);
-                trashbin.setVisibility(trashbin.VISIBLE);
+                closedbin.setVisibility(closedbin.VISIBLE);
                 open.setVisibility(Open.VISIBLE);
                 close.setVisibility(close.VISIBLE);
+
+                name=result.getContents().toString();
+                String trash ="trash"+ UUID.randomUUID().toString();
+                savefile(trash,name);
+                name=result.getContents().toString();
+
 
                try {
                    open.setOnClickListener(new View.OnClickListener() {
                        @Override
-                       public void onClick(View v) {
+                       public void onClick(View v){
+                           openedbin.setVisibility(openedbin.VISIBLE);
+                           closedbin.setVisibility(closedbin.GONE);
                            db.collection("trash").document(result.getContents().toString()).update("열림체크","1");
-                           name=result.getContents().toString();
-                           saveName();
+                           db.collection("trash").document(result.getContents().toString()).update("사용자",readmemo("id.txt"));
                        }
 
                    });
@@ -214,7 +217,10 @@ public class QR_main extends AppCompatActivity {
                    close.setOnClickListener(new View.OnClickListener() {
                        @Override
                        public void onClick(View v) {
+                           openedbin.setVisibility(openedbin.GONE);
+                           closedbin.setVisibility(closedbin.VISIBLE);
                            db.collection("trash").document(result.getContents().toString()).update("열림체크","0");
+
                        }
                    });
 
@@ -227,16 +233,12 @@ public class QR_main extends AppCompatActivity {
             super.onActivityResult(requestCode, resultCode, data);
         }
     }
-    String trash ="trash"+ UUID.randomUUID().toString();
 
-    public void saveName()
-    {
-        savefile(trash,name);
-    }
+
     public void savefile(String filename,String date){
 
             try {
-                FileOutputStream fo = openFileOutput(filename, MODE_PRIVATE);
+                FileOutputStream fo = openFileOutput(filename+".txt", MODE_PRIVATE);
                 DataOutputStream dos = new DataOutputStream(fo);
                 dos.write(date.getBytes());
                 dos.flush();
@@ -246,5 +248,29 @@ public class QR_main extends AppCompatActivity {
             } catch (IOException e) {
 
             }
+    }
+
+
+    public String readmemo(String fileName) {
+
+        try {
+            // 파일에서 읽은 데이터를 저장하기 위해서 만든 변수
+            StringBuffer data = new StringBuffer();
+            FileInputStream fs = openFileInput(fileName);//파일명
+            BufferedReader buffer = new BufferedReader
+                    (new InputStreamReader(fs));
+            String str = buffer.readLine(); // 파일에서 한줄을 읽어옴
+            if (str != null) {
+                while (str != null) {
+                    data.append(str);
+                    str = buffer.readLine();
+                }
+                buffer.close();
+                return data.toString();
+            }
+        } catch (Exception e) {
+
+        }
+        return null;
     }
 }
