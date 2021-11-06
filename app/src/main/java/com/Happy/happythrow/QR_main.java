@@ -200,13 +200,15 @@ public class QR_main extends AppCompatActivity {
                 open.setVisibility(Open.VISIBLE);
                 close.setVisibility(close.VISIBLE);
 
+                name=result.getContents().toString();
+                String trash ="trash"+ UUID.randomUUID().toString();
+                savefile(trash,name);
+
                try {
                    open.setOnClickListener(new View.OnClickListener() {
                        @Override
                        public void onClick(View v) {
                            db.collection("trash").document(result.getContents().toString()).update("열림체크","1");
-                           name=result.getContents().toString();
-                           saveName();
                        }
 
                    });
@@ -215,6 +217,7 @@ public class QR_main extends AppCompatActivity {
                        @Override
                        public void onClick(View v) {
                            db.collection("trash").document(result.getContents().toString()).update("열림체크","0");
+
                        }
                    });
 
@@ -227,16 +230,13 @@ public class QR_main extends AppCompatActivity {
             super.onActivityResult(requestCode, resultCode, data);
         }
     }
-    String trash ="trash"+ UUID.randomUUID().toString();
 
-    public void saveName()
-    {
-        savefile(trash,name);
-    }
+
+
     public void savefile(String filename,String date){
 
             try {
-                FileOutputStream fo = openFileOutput(filename, MODE_PRIVATE);
+                FileOutputStream fo = openFileOutput(filename+".txt", MODE_PRIVATE);
                 DataOutputStream dos = new DataOutputStream(fo);
                 dos.write(date.getBytes());
                 dos.flush();
