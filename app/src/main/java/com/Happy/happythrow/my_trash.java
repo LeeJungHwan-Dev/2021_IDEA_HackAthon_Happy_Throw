@@ -1,5 +1,7 @@
 package com.Happy.happythrow;
 
+import static android.content.ContentValues.TAG;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
@@ -7,10 +9,23 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.TextView;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
 
 public class my_trash extends AppCompatActivity {
 
@@ -21,50 +36,13 @@ public class my_trash extends AppCompatActivity {
      */
 
     ImageButton Gotrash,Gochart,Gosetting;
-    public class trashitem {
-        String name;
-        String howfull;
-        int fullnum;
+    ArrayList <String> nameList = new ArrayList<>();
+    ArrayList <String> howfullList = new ArrayList<>();
+    ArrayList <String> fullnumList = new ArrayList<>();
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private RecyclerView recyclerView;
+    Adapter adapter;
 
-        public trashitem(String name, String howfull, int fullnum) {
-            this.name = name;
-            this.howfull = howfull;
-            this.fullnum = fullnum;
-        }
-
-        public String getName(){
-            return name;
-        }
-
-        public String gethowfull(){
-            return howfull;
-        }
-
-        public int getfullnum(){
-            return fullnum;
-        }
-
-        public void setName(String name){
-            this.name = name;
-        }
-
-        public void sethowfull(String howfull){
-            this.howfull = howfull;
-        }
-
-        public void setfullnum(int fullnum){
-            this.fullnum = fullnum;
-        }
-    }
-class ViewHolder extends RecyclerView.ViewHolder {
-    public TextView textView;
-    public ImageButton imageButton;
-
-    ViewHolder(Context context, View itemView){
-        super(itemView);
-    }
-
-}
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,6 +56,7 @@ class ViewHolder extends RecyclerView.ViewHolder {
         Gotrash = findViewById(R.id.Go_Trash_button);
         Gochart = findViewById(R.id.Go_chart_button);
         Gosetting = findViewById(R.id.Go_setting_button);
+        recyclerView = findViewById(R.id.itemList);
         /**
          * 아래 코드는 건들지 마시오.
          * 레이아웃을 다시 그려주는 코드 입니다.
@@ -91,6 +70,26 @@ class ViewHolder extends RecyclerView.ViewHolder {
         /**
          * 이 아래로 코드를 작성해주세요.
          */
+        nameList.add("Trash");
+        howfullList.add("Howfull");
+        fullnumList.add("80");
+        Adapter adapter = new Adapter(nameList, howfullList, fullnumList);
+        recyclerView.setAdapter(adapter);
+        // adapter.notifyDataSetChanged();
+        db.collection("trash")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Log.d(TAG, document.getId() + " => " + document.getData());
+                            }
+                        } else {
+                            Log.w(TAG, "Error getting documents.", task.getException());
+                        }
+                    }
+                });
 
         Gotrash.setOnClickListener(new View.OnClickListener() {
             @Override
