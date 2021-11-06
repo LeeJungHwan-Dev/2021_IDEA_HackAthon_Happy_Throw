@@ -22,10 +22,13 @@ import com.google.zxing.integration.android.IntentResult;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
 import java.io.DataOutputStream;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 
 public class QR_main extends AppCompatActivity {
@@ -40,7 +43,6 @@ public class QR_main extends AppCompatActivity {
     Button QR_Shot, open, close;
     ImageButton GoMyBin, GoMyChart, GoSetting;
     ImageView trashbin;
-    View v;
 
     private IntentIntegrator qrScan;
 
@@ -203,7 +205,9 @@ public class QR_main extends AppCompatActivity {
                 trashbin.setVisibility(trashbin.VISIBLE);
                 open.setVisibility(Open.VISIBLE);
                try {
+
                    db.collection("trash").document(result.getContents().toString()).update("열림체크","1");
+                   db.collection("trash").document(result.getContents().toString()).update("사용자",readmemo("id.txt"));
 
                } catch (Exception e) {
                    e.printStackTrace();
@@ -229,5 +233,28 @@ public class QR_main extends AppCompatActivity {
         } catch (IOException e) {
 
         }
+    }
+
+    public String readmemo(String fileName){
+
+        try {
+            // 파일에서 읽은 데이터를 저장하기 위해서 만든 변수
+            StringBuffer data = new StringBuffer();
+            FileInputStream fs = openFileInput(fileName);//파일명
+            BufferedReader buffer = new BufferedReader
+                    (new InputStreamReader(fs));
+            String str = buffer.readLine(); // 파일에서 한줄을 읽어옴
+            if(str != null) {
+                while (str != null) {
+                    data.append(str);
+                    str = buffer.readLine();
+                }
+                buffer.close();
+                return data.toString();
+            }
+        } catch (Exception e) {
+
+        }
+        return null;
     }
 }
