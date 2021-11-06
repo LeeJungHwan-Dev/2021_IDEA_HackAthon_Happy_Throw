@@ -3,6 +3,7 @@ package com.Happy.happythrow;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -112,10 +113,6 @@ public class QR_main extends AppCompatActivity {
                  * 서버에 값을 전송 또는 수정 등등
                  */
                 Open=view;
-
-
-
-                close.setVisibility(Close.VISIBLE);
             }
         });
 
@@ -127,8 +124,6 @@ public class QR_main extends AppCompatActivity {
                  * 서버에 값을 전송 또는 수정 등등
                  */
                 Close=view;
-
-                open.setVisibility(Open.VISIBLE);
             }
         });
 
@@ -202,8 +197,21 @@ public class QR_main extends AppCompatActivity {
                 QR_Shot.setVisibility(QR_Shot1.GONE);
                 trashbin.setVisibility(trashbin.VISIBLE);
                 open.setVisibility(Open.VISIBLE);
+                close.setVisibility(close.VISIBLE);
+
                try {
-                   db.collection("trash").document(result.getContents().toString()).update("열림체크","1");
+                   open.setOnClickListener(new View.OnClickListener() {
+                       @Override
+                       public void onClick(View v) {
+                           db.collection("trash").document(result.getContents().toString()).update("열림체크","1");
+                       }
+                   });
+                   close.setOnClickListener(new View.OnClickListener() {
+                       @Override
+                       public void onClick(View v) {
+                           db.collection("trash").document(result.getContents().toString()).update("열림체크","0");
+                       }
+                   });
 
                } catch (Exception e) {
                    e.printStackTrace();
