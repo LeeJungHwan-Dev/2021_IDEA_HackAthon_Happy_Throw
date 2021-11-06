@@ -101,10 +101,6 @@ public class trash_chart extends AppCompatActivity {
                 List<String> value = (List<String>) document.get("2021");
                 for(int i=0; i<12; i++) {
                     valueArray[i] = Integer.parseInt(value.get(i));
-                    //Log.d("myTag", String.valueOf(valueArray[i]));
-                }
-                for (int i=0; i< 12; i++) {
-                    Log.d("1", String.valueOf(valueArray[i]));
                 }
 
                 BarChartGraph();
@@ -174,7 +170,6 @@ public class trash_chart extends AppCompatActivity {
     private void BarChartGraph() {
         ArrayList<BarEntry> entries = new ArrayList<>();
         for (int i=0; i< 12; i++) {
-            Log.d("tlqkf", String.valueOf(valueArray[i]));
             entries.add(new BarEntry(i+1, (Integer) valueArray[i]));
         }
 
