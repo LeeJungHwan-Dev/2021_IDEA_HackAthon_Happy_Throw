@@ -31,7 +31,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.Holder> {
         Context context = parent.getContext();
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.my_trashitem, parent, false);
-        return new Holder(view);
+        return new Holder(view);//
     }
 
     @Override
