@@ -23,7 +23,7 @@ import java.util.UUID;
 
 
 public class QR_main extends AppCompatActivity {
-    String name;
+    String name;//It's Jinny
 
     /**
      * 이곳에
