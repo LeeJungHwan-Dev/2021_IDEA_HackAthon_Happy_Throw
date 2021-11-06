@@ -125,8 +125,6 @@ public class trash_chart extends AppCompatActivity {
                 startActivity(intent);
                 overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
                 finish();
-
-
             }
         });
 
