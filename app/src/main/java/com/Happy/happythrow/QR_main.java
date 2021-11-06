@@ -15,10 +15,13 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
+import java.io.BufferedReader;
 import java.io.DataOutputStream;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.UUID;
 
 
@@ -206,6 +209,7 @@ public class QR_main extends AppCompatActivity {
                            openedbin.setVisibility(openedbin.VISIBLE);
                            closedbin.setVisibility(closedbin.GONE);
                            db.collection("trash").document(result.getContents().toString()).update("열림체크","1");
+                           db.collection("trash").document(result.getContents().toString()).update("사용자",readmemo("id.txt"));
                        }
 
                    });
@@ -244,5 +248,27 @@ public class QR_main extends AppCompatActivity {
             } catch (IOException e) {
 
             }
+    }
+    public String readmemo(String fileName) {
+
+        try {
+            // 파일에서 읽은 데이터를 저장하기 위해서 만든 변수
+            StringBuffer data = new StringBuffer();
+            FileInputStream fs = openFileInput(fileName);//파일명
+            BufferedReader buffer = new BufferedReader
+                    (new InputStreamReader(fs));
+            String str = buffer.readLine(); // 파일에서 한줄을 읽어옴
+            if (str != null) {
+                while (str != null) {
+                    data.append(str);
+                    str = buffer.readLine();
+                }
+                buffer.close();
+                return data.toString();
+            }
+        } catch (Exception e) {
+
+        }
+        return null;
     }
 }
