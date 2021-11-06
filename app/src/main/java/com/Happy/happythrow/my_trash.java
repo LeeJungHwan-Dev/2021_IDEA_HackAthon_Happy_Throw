@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -52,6 +53,7 @@ public class my_trash extends AppCompatActivity {
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     ArrayList <String> nameList = new ArrayList<>();
+    ArrayList <String> path = new ArrayList<>();
 
     RecyclerView recyclerView;
 
@@ -93,15 +95,16 @@ public class my_trash extends AppCompatActivity {
                 String checkpath = String.valueOf(list[i]);
                 String subCheckpath = checkpath.substring(38);
 
-                if (!(subCheckpath.equals("id.txt"))) {
+                if (!(subCheckpath.equals("id.txt"))&&!(subCheckpath.equals("id"))) {
                     nameList.add(readmemo(subCheckpath));
+                    path.add(subCheckpath);
                 }
             }
 
         };
 
 
-        Adapter adapter = new Adapter(nameList);
+        Adapter adapter = new Adapter(nameList,this,path);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
 
@@ -163,6 +166,9 @@ public class my_trash extends AppCompatActivity {
                 finish();
             }
         });
+
+
+
     }
     public String readmemo(String fileName) {
 
@@ -186,5 +192,6 @@ public class my_trash extends AppCompatActivity {
         }
         return null;
     }
+
 
 }

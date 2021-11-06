@@ -37,6 +37,7 @@ public class QR_main extends AppCompatActivity {
     Button QR_Shot, open, close;
     ImageButton GoMyBin, GoMyChart, GoSetting;
     ImageView openedbin,closedbin;
+    String id;
     View v;
 
     private IntentIntegrator qrScan;
@@ -81,6 +82,21 @@ public class QR_main extends AppCompatActivity {
          * 이 아래로 코드를 작성해주세요.
          */
 
+        try {
+            Intent intent = getIntent();
+            id = intent.getStringExtra("go");
+            if(id != null){
+                open.setVisibility(View.VISIBLE);
+                close.setVisibility(View.VISIBLE);
+                QR_Shot.setVisibility(View.GONE);
+                closedbin.setVisibility(View.VISIBLE);
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
         QR_Shot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -105,10 +121,12 @@ public class QR_main extends AppCompatActivity {
         open.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /**
-                 * 이곳에 open 이벤트 작성 할 것.
-                 * 서버에 값을 전송 또는 수정 등등
-                 */
+                if (id != null) {
+                    openedbin.setVisibility(openedbin.VISIBLE);
+                    closedbin.setVisibility(closedbin.GONE);
+                    db.collection("trash").document(id).update("열림체크", "1");
+                    db.collection("trash").document(id).update("사용자", readmemo("id.txt"));
+                }
                 Open=view;
             }
         });
@@ -116,10 +134,11 @@ public class QR_main extends AppCompatActivity {
         close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /**
-                 * 이곳에 close 이벤트 작성 할 것.
-                 * 서버에 값을 전송 또는 수정 등등
-                 */
+                if (id != null) {
+                    openedbin.setVisibility(openedbin.GONE);
+                    closedbin.setVisibility(closedbin.VISIBLE);
+                    db.collection("trash").document(id).update("열림체크", "0");
+                }
                 Close=view;
             }
         });
@@ -205,11 +224,12 @@ public class QR_main extends AppCompatActivity {
                try {
                    open.setOnClickListener(new View.OnClickListener() {
                        @Override
-                       public void onClick(View v){
-                           openedbin.setVisibility(openedbin.VISIBLE);
-                           closedbin.setVisibility(closedbin.GONE);
-                           db.collection("trash").document(result.getContents().toString()).update("열림체크","1");
-                           db.collection("trash").document(result.getContents().toString()).update("사용자",readmemo("id.txt"));
+                       public void onClick(View v) {
+                               openedbin.setVisibility(openedbin.VISIBLE);
+                               closedbin.setVisibility(closedbin.GONE);
+                               db.collection("trash").document(result.getContents().toString()).update("열림체크", "1");
+                               db.collection("trash").document(result.getContents().toString()).update("사용자", readmemo("id.txt"));
+
                        }
 
                    });
@@ -217,9 +237,11 @@ public class QR_main extends AppCompatActivity {
                    close.setOnClickListener(new View.OnClickListener() {
                        @Override
                        public void onClick(View v) {
-                           openedbin.setVisibility(openedbin.GONE);
-                           closedbin.setVisibility(closedbin.VISIBLE);
-                           db.collection("trash").document(result.getContents().toString()).update("열림체크","0");
+
+                               openedbin.setVisibility(openedbin.GONE);
+                               closedbin.setVisibility(closedbin.VISIBLE);
+                               db.collection("trash").document(result.getContents().toString()).update("열림체크", "0");
+
 
                        }
                    });

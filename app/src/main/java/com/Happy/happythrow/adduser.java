@@ -99,33 +99,33 @@ public class adduser extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                try {
-
-
                     db.collection("Userdata").document(numberinput.getText().toString()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                         @Override
                         public void onSuccess(DocumentSnapshot documentSnapshot) {
 
 
-                            if (documentSnapshot.get("이름") != null && !(nameinput.getText().toString().equals(""))) {
+                            if (documentSnapshot.get("이름") != null) {
                                 Toast.makeText(adduser.this, "이미가입되어있습니다.", Toast.LENGTH_SHORT).show();
-                                savefile("id.txt", numberinput.getText().toString());
-                                Intent intent = new Intent(adduser.this, QR_main.class);
+                                savefile("id",numberinput.getText().toString());
+                                Intent intent = new Intent(adduser.this,QR_main.class);
                                 startActivity(intent);
                                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                                 finish();
-                            } else {
-                                if (numberinput.getText().length() > 11 || numberinput.getText().length() < 11) {
-                                    Toast.makeText(adduser.this, "올바른 번호로 입력해주세요.", Toast.LENGTH_SHORT).show();
-                                } else if (numberinput.getText().length() == 11 && !(nameinput.getText().toString().equals("")) && !(chosecallBrand.equals("")) && !(nameinput.getText().toString().equals(""))) {
+                            }
+                            else{
+                                if(numberinput.getText().length() > 11 ||numberinput.getText().length() < 11 ){
+                                    Toast.makeText(adduser.this,"올바른 번호로 입력해주세요.",Toast.LENGTH_SHORT).show();
+                                }
+                                else if(numberinput.getText().length() == 11 && !(nameinput.getText().toString().equals("")) && !(chosecallBrand.equals(""))&&!(nameinput.getText().toString().equals(""))){
                                     InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
                                     imm.hideSoftInputFromWindow(numberinput.getWindowToken(), 0);
-                                    Toast.makeText(adduser.this, "실명인증 완료.", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(adduser.this,"실명인증 완료.",Toast.LENGTH_SHORT).show();
                                     round1 = 1;
                                     name = nameinput.getText().toString();
                                     phonenum = numberinput.getText().toString();
-                                } else {
-                                    Toast.makeText(adduser.this, "이름을 입력해주세요.", Toast.LENGTH_SHORT).show();
+                                }
+                                else{
+                                    Toast.makeText(adduser.this,"이름을 입력해주세요.",Toast.LENGTH_SHORT).show();
                                 }
                             }
                         }
@@ -134,9 +134,6 @@ public class adduser extends AppCompatActivity {
                         public void onFailure(@NonNull Exception e) {
                         }
                     });
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
 
 
             }
