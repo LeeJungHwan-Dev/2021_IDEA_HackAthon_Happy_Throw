@@ -18,15 +18,25 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.Source;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
+import java.nio.file.Path;
 import java.util.ArrayList;
 
 public class my_trash extends AppCompatActivity {
@@ -36,12 +46,14 @@ public class my_trash extends AppCompatActivity {
      * (사용할 아이템) 변수 이름;
      * 형태로 지정한 다음 아래 참고.
      */
+    String str;
 
     ImageButton Gotrash,Gochart,Gosetting;
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+
     ArrayList <String> nameList = new ArrayList<>();
     ArrayList <String> howfullList = new ArrayList<>();
     ArrayList <String> fullnumList = new ArrayList<>();
-    private FirebaseFirestore db = FirebaseFirestore.getInstance();
     RecyclerView recyclerView;
 
     @Override
@@ -72,9 +84,25 @@ public class my_trash extends AppCompatActivity {
          * 이 아래로 코드를 작성해주세요.
          */
 
-        nameList.add("Kim"); nameList.add("jung");
-        howfullList.add("How full?"); howfullList.add("How full?");
-        fullnumList.add("80"); fullnumList.add("90");
+
+        File dir = new File(String.valueOf(getFilesDir()));
+        File list[] = dir.listFiles();
+
+        if (list.length != 0) {
+            int number = list.length;
+            for (int i = 0; i < number; i++) {
+                String checkpath = String.valueOf(list[i]);
+                String subCheckpath = checkpath.substring(38);
+
+                if (!(subCheckpath.equals("id.txt"))) {
+                    nameList.add(readmemo(subCheckpath));
+                }
+            }
+
+        }
+
+        inputfull();
+
         Adapter adapter = new Adapter(nameList, howfullList, fullnumList);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
@@ -137,5 +165,47 @@ public class my_trash extends AppCompatActivity {
                 finish();
             }
         });
+    }
+    public String readmemo(String fileName) {
+
+        try {
+            // 파일에서 읽은 데이터를 저장하기 위해서 만든 변수
+            StringBuffer data = new StringBuffer();
+            FileInputStream fs = openFileInput(fileName);//파일명
+            BufferedReader buffer = new BufferedReader
+                    (new InputStreamReader(fs));
+            String str = buffer.readLine(); // 파일에서 한줄을 읽어옴
+            if (str != null) {
+                while (str != null) {
+                    data.append(str);
+                    str = buffer.readLine();
+                }
+                buffer.close();
+                return data.toString();
+            }
+        } catch (Exception e) {
+
+        }
+        return null;
+    }
+    public void inputfull(){
+        int sizenameList = nameList.size();
+        for(int j=0; j< sizenameList; j++) {
+        db.collection("trash").document(nameList.get(j))
+                .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+
+                str =  String.valueOf(documentSnapshot.get("포화도"));
+                Log.i("str", str);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+                public void onFailure(@NonNull Exception e) {
+                Log.i("Fail", "Fail!!!!!!!!!!");
+                }
+            });
+            fullnumList.add(str);
+        }
     }
 }

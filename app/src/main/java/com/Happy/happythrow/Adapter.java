@@ -21,7 +21,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.Holder> {
 
     public Adapter(ArrayList<String> name, ArrayList<String> howfull,ArrayList<String> fullnum ) {
         this.nameList = name;
-        this.howfullList = howfull;
+        //this.howfullList = howfull;
         this.fullnumList = fullnum;
     }
 
@@ -39,7 +39,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.Holder> {
     public void onBindViewHolder(@NonNull Holder holder, int position) {
 
         holder.name.setText(nameList.get(position));
-        holder.howfull.setText(howfullList.get(position));
+        //holder.howfull.setText(howfullList.get(position));
         holder.fullnum.setText(fullnumList.get(position));
     }
 
