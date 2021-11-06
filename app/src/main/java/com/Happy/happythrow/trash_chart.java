@@ -1,14 +1,18 @@
 package com.Happy.happythrow;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.Legend;
@@ -29,9 +33,23 @@ import com.github.mikephil.charting.interfaces.datasets.IDataSet;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.github.mikephil.charting.utils.MPPointF;
-
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Set;
+import java.util.Map;
+import java.util.HashMap;
 
 public class trash_chart extends AppCompatActivity {
 
@@ -43,9 +61,9 @@ public class trash_chart extends AppCompatActivity {
 
     ImageButton Gotrash,GoMyBin,Gosetting;
     BarChart barChart;
-    ArrayList<Integer> valueList = new ArrayList<>();
-    ArrayList<Integer> labelList = new ArrayList<>();
-    TextView minuteTextview;
+    Integer [] valueArray = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+    private static FirebaseFirestore db = FirebaseFirestore.getInstance();
+    DocumentReference productRef = db.collection("hwtrash").document("id");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,12 +79,6 @@ public class trash_chart extends AppCompatActivity {
         Gosetting = findViewById(R.id.Go_setting_button);
         Gotrash = findViewById(R.id.Go_Trash_button);
         barChart = (BarChart)findViewById(R.id.bar_chart);
-        graphInitSetting();
-
-        BarChartGraph(labelList, valueList);
-        barChart.setTouchEnabled(false); // 확대불가
-        barChart.getAxisRight().setAxisMaxValue(100);
-        barChart.getAxisLeft().setAxisMaxValue(100);
 
         /**
          * 아래 코드는 건들지 마시오.
@@ -78,11 +90,29 @@ public class trash_chart extends AppCompatActivity {
         lp.height = WindowManager.LayoutParams.MATCH_PARENT;
         getWindow().setAttributes(lp);
 
-        /**
+        /**--
          * 이 아래로 코드를 작성해주세요.
          */
 
+        productRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                DocumentSnapshot document = task.getResult();
+                List<String> value = (List<String>) document.get("2021");
+                for(int i=0; i<12; i++) {
+                    valueArray[i] = Integer.parseInt(value.get(i));
+                    //Log.d("myTag", String.valueOf(valueArray[i]));
+                }
+                for (int i=0; i< 12; i++) {
+                    Log.d("1", String.valueOf(valueArray[i]));
+                }
 
+                BarChartGraph();
+                barChart.setTouchEnabled(false); // 확대불가
+                barChart.getAxisRight().setAxisMaxValue(120);
+                barChart.getAxisLeft().setAxisMaxValue(120);
+            }
+        });
 
         GoMyBin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -141,53 +171,16 @@ public class trash_chart extends AppCompatActivity {
         });
     }
 
-    public void graphInitSetting() {
-        labelList.add(1);
-        labelList.add(2);
-        labelList.add(3);
-        labelList.add(4);
-        labelList.add(5);
-        labelList.add(6);
-        labelList.add(7);
-        labelList.add(8);
-        labelList.add(9);
-        labelList.add(10);
-        labelList.add(11);
-        labelList.add(12);
-
-        valueList.add(10);
-        valueList.add(20);
-        valueList.add(30);
-        valueList.add(40);
-        valueList.add(100);
-        valueList.add(60);
-        valueList.add(90);
-        valueList.add(50);
-        valueList.add(40);
-        valueList.add(60);
-        valueList.add(20);
-        valueList.add(10);
-
-        BarChartGraph(labelList, valueList);
-        barChart.setTouchEnabled(false); // 확대불가
-        barChart.getAxisRight().setAxisMaxValue(100);
-        barChart.getAxisLeft().setAxisMaxValue(100);
-    }
-
-    private void BarChartGraph(ArrayList<Integer> labelList, ArrayList<Integer> valueList) {
+    private void BarChartGraph() {
         ArrayList<BarEntry> entries = new ArrayList<>();
-        for (int i=0; i< valueList.size(); i++) {
-            entries.add(new BarEntry(i+1, (Integer) valueList.get(i)));
+        for (int i=0; i< 12; i++) {
+            Log.d("tlqkf", String.valueOf(valueArray[i]));
+            entries.add(new BarEntry(i+1, (Integer) valueArray[i]));
         }
 
         BarDataSet depenses = new BarDataSet(entries, "쓰레기 배출량 단위: kg");
         depenses.setAxisDependency(YAxis.AxisDependency.LEFT);
         barChart.setDescription(null);
-
-        ArrayList<Integer> labels = new ArrayList<Integer>();
-        for (int i=0; i < labelList.size(); i++) {
-            labels.add(labelList.get(i));
-        }
 
         XAxis xAxis = barChart.getXAxis();
         xAxis.setPosition(XAxisPosition.BOTTOM);
@@ -203,11 +196,11 @@ public class trash_chart extends AppCompatActivity {
 
         BarData data = new BarData(depenses);
         depenses.setColors(ColorTemplate.LIBERTY_COLORS);
-        data.setValueTextSize(14);
+        data.setValueTextSize(13);
         data.setValueTypeface(Typeface.DEFAULT_BOLD);
 
         barChart.setData(data);
-        barChart.animateXY(100, 100);
+        barChart.animateXY(120, 120);
         barChart.invalidate();
     }
 }
