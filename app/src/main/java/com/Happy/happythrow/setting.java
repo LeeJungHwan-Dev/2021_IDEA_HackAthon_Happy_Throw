@@ -200,7 +200,7 @@ public class setting extends AppCompatActivity {
                 int a = files.length;
                 for (int i = 0; i < a; i++) {
                     if(files[i].toString().length() < 45){
-
+                    //123
                     }
                     else {
                         String path2 = files[i].toString();
