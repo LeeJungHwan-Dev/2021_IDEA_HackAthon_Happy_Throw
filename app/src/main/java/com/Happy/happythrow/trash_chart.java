@@ -101,7 +101,7 @@ public class trash_chart extends AppCompatActivity {
         /**--
          * 이 아래로 코드를 작성해주세요.
          */
-        try {
+
             productRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                 long now = System.currentTimeMillis();
                 Date mDate = new Date(now);
@@ -113,7 +113,12 @@ public class trash_chart extends AppCompatActivity {
                     DocumentSnapshot document = task.getResult();
                     List<Long> value = (List<Long>) document.get(getTime);
                     for (int i = 0; i < 12; i++) {
-                        valueArray[i] = value.get(i);
+                        try {
+                            valueArray[i] = value.get(i);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
                     }
 
                     BarChartGraph();
@@ -122,9 +127,7 @@ public class trash_chart extends AppCompatActivity {
                     barChart.getAxisLeft().setAxisMaxValue(120);
                 }
             });
-        } catch(Exception e) {
 
-        }
 
         GoMyBin.setOnClickListener(new View.OnClickListener() {
             @Override
