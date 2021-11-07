@@ -199,11 +199,15 @@ public class setting extends AppCompatActivity {
                 File[] files = file.listFiles();
                 int a = files.length;
                 for (int i = 0; i < a; i++) {
-                    File file1 = new File(getFilesDir(), "trash" + i + ".txt");
-                    if (file1.exists()) {
-                        file1.delete();
-                    } else {
+                    if(files[i].toString().length() < 45){
 
+                    }
+                    else {
+                        String path2 = files[i].toString();
+                        File file1 = new File(path2);
+                        if (file1.exists()) {
+                            file1.delete();
+                        }
                     }
                 }
                 Toast.makeText(setting.this,"초기화 완료",Toast.LENGTH_SHORT).show();
