@@ -106,7 +106,7 @@ public class adduser extends AppCompatActivity {
 
                             if (documentSnapshot.get("이름") != null) {
                                 Toast.makeText(adduser.this, "이미가입되어있습니다.", Toast.LENGTH_SHORT).show();
-                                savefile("id",numberinput.getText().toString());
+                                savefile("id.txt",numberinput.getText().toString());
                                 Intent intent = new Intent(adduser.this,QR_main.class);
                                 startActivity(intent);
                                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);

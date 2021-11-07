@@ -76,7 +76,6 @@ public class trash_chart extends AppCompatActivity {
         setContentView(R.layout.activity_trash_chart);
 
         String id = readmemo("id.txt");
-        Log.i("test", id);
         productRef = db.collection("Userdata").document(id);
 
         /**
