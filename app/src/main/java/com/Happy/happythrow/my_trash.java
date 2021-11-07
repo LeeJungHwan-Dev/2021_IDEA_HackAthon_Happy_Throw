@@ -166,9 +166,6 @@ public class my_trash extends AppCompatActivity {
                 finish();
             }
         });
-
-
-
     }
     public String readmemo(String fileName) {
 
