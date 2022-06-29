@@ -29,13 +29,13 @@
  
  <table align="center">
 <tr>
-<td><img src = "https://user-images.githubusercontent.com/93726941/176470953-acb0b629-faf0-476e-bed5-1b6021da26c5.jpg" width = "180" hight = "250"/><td> 
-<td><img src = "https://user-images.githubusercontent.com/93726941/176471557-de3811c9-f47b-4aaf-8662-3f447d39234e.jpg" width = "180" hight = "250"/><td>
+<td><img src = "https://user-images.githubusercontent.com/93726941/176470953-acb0b629-faf0-476e-bed5-1b6021da26c5.jpg" width = "180" hight = "250"/>
+<td><img src = "https://user-images.githubusercontent.com/93726941/176471557-de3811c9-f47b-4aaf-8662-3f447d39234e.jpg" width = "180" hight = "250"/>
 <td><img src = "https://user-images.githubusercontent.com/93726941/176471529-3c62bb13-d285-4cfe-b726-a4ee59cc8f57.jpg" width = "180" hight = "250"/>
 <tr>
 <tr>
-    <td><img src = "https://user-images.githubusercontent.com/93726941/176471824-f1ac62d1-291a-4ebc-8db7-ef711f45a269.jpg" width = "180" hight = "250"/><td>
-    <td><img src = "https://user-images.githubusercontent.com/93726941/176471879-8a69045b-ae4c-459c-a767-17c16bd74fa0.jpg" width = "180" hight = "250"/><td>
+    <td><img src = "https://user-images.githubusercontent.com/93726941/176471824-f1ac62d1-291a-4ebc-8db7-ef711f45a269.jpg" width = "180" hight = "250"/>
+    <td><img src = "https://user-images.githubusercontent.com/93726941/176471879-8a69045b-ae4c-459c-a767-17c16bd74fa0.jpg" width = "180" hight = "250"/>
     <td><img src = "https://user-images.githubusercontent.com/93726941/176471720-d5d878a2-dd0b-4c2a-be61-1df385e67f00.jpg" width = "180" hight = "250"/>
     
 <tr>
