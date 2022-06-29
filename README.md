@@ -54,6 +54,6 @@
 - Chart : MPAndroidChart<br>
 
 ## 테스트 환경
-- 안드로이드 Ver : Android 10<br>
+- 안드로이드 Ver : Android 11<br>
 - Sdk Level : 30<br>
 - Ram : 4G<br>
