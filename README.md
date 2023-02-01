@@ -29,6 +29,16 @@
 - QR코드와 스마트폰을 통한 음식물 쓰레기통 조작 < 열림 / 닫힘 >
 - 음식물 쓰레기 배출량 확인
 - 음식물 쓰레기 처리 비용 자동 결제 * 임시 구현
+
+## 컨셉 이미지
+
+ <table align="center">
+<tr>
+<td><img src = "https://user-images.githubusercontent.com/93726941/215962758-0cac0d8e-c31a-439f-b1cd-0d939e27d61a.png" width = "180" hight = "250"/>
+<td><img src = "https://user-images.githubusercontent.com/93726941/215962783-038e1c71-c374-4eb2-ab97-599379faec7e.png" width = "180" hight = "250"/>
+</tr>
+</table>
+
  
 ## 주요 기능 이미지
  
